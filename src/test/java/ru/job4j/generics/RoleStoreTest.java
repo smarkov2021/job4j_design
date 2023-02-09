@@ -76,5 +76,5 @@ class RoleStoreTest {
         store.add(new Role("1", "Sergey", "Analytic"));
         boolean rsl = store.delete("342");
         assertThat(rsl).isFalse();
-    }
+    }пр
 }
