@@ -10,34 +10,29 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
     private int size = 0;
     private int modCount = 0;
     private Node<E> head;
-    private Node<E> first;
 
-    void linkLast(E e) {
-        final Node<E> l = head;
-        final Node<E> newNode = new Node<>(e, null);
-        this.head = newNode;
-        if (l != null) {
-            l.next = newNode;
+    @Override
+    public void add(E value) {
+        Node<E> l = head;
+        final Node<E> newNode = new Node<>(value, null);
+        if (head == null) {
+            head = newNode;
         } else {
-            first = newNode;
+            while (l.next != null) {
+                l = l.next;
+            }
+            l.next = newNode;
         }
         size++;
         modCount++;
     }
 
     @Override
-    public void add(E value) {
-        linkLast(value);
-    }
-
-    @Override
     public E get(int index) {
         Objects.checkIndex(index, size);
-        Node<E> param = first;
-        int i = 0;
-        while (i < index) {
+        Node<E> param = head;
+        for (int i = 0; i < index; i++) {
             param = param.next;
-            i++;
         }
         return param.getItem();
     }
@@ -46,7 +41,7 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
     public Iterator<E> iterator() {
         int expectedModCount = modCount;
         return new Iterator<E>() {
-            Node<E> param = first;
+            Node<E> param = head;
             Node<E> prev;
             @Override
             public boolean hasNext() {
