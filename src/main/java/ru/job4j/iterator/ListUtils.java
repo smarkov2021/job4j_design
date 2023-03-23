@@ -49,7 +49,6 @@ public class ListUtils {
     }
 
     public static <T> void removeAll(List<T> list, List<T> elements) {
-        Predicate<T> filter = elem -> elements.contains(elem);
-        removeIf(list, filter);
+        removeIf(list,  elem -> elements.contains(elem));
     }
 }
