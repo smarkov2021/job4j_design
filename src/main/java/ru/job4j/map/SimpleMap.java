@@ -90,12 +90,8 @@ public class SimpleMap<K, V> implements Map<K, V> {
                 if (modCount != expectedModCount) {
                     throw new ConcurrentModificationException();
                 }
-                while (index < capacity) {
-                    if (table[index] == null) {
+                while (index < capacity && table[index] == null) {
                         index++;
-                    } else {
-                        break;
-                    }
                 }
                 return index < capacity;
             }
