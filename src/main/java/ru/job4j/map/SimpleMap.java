@@ -40,13 +40,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     }
 
     private int indexByKey(K key) {
-        int index = 0;
-        if (key == null) {
-            index = indexFor(hash(0));
-        } else {
-            index = indexFor(hash(key.hashCode()));
-        }
-        return index;
+        return key == null ?  indexFor(hash(0)) : indexFor(hash(key.hashCode()));
     }
 
     private void expand() {
@@ -64,15 +58,10 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public V get(K key) {
         V rsl = null;
-        for (int i = 0; i < capacity; i++) {
-            if (table[i] == null) {
-                continue;
-            }
-            if (Objects.hashCode(table[i].key) == Objects.hashCode(key)
-                    && Objects.equals(table[i].key, key)) {
-                rsl = table[i].value;
-                break;
-            }
+        int index = indexByKey(key);
+        if (table[index] != null && Objects.hashCode(table[index].key) == Objects.hashCode(key)
+                && Objects.equals(table[index].key, key)) {
+            rsl = table[index].value;
         }
         return rsl;
     }
@@ -81,7 +70,8 @@ public class SimpleMap<K, V> implements Map<K, V> {
     public boolean remove(K key) {
         boolean rsl = false;
         int index = indexByKey(key);
-        if (table[index] != null && Objects.equals(table[index].key, key)) {
+        if (table[index] != null && Objects.hashCode(table[index].key) == Objects.hashCode(key)
+                && Objects.equals(table[index].key, key)) {
             table[index] = null;
             modCount++;
             rsl = true;
