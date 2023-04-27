@@ -55,12 +55,16 @@ public class SimpleMap<K, V> implements Map<K, V> {
         }
     }
 
+    private boolean checkKey(MapEntry elem, K secondKey) {
+        return elem != null && Objects.hashCode(elem.key) == Objects.hashCode(secondKey)
+                && Objects.equals(elem.key, secondKey);
+    }
+
     @Override
     public V get(K key) {
         V rsl = null;
         int index = indexByKey(key);
-        if (table[index] != null && Objects.hashCode(table[index].key) == Objects.hashCode(key)
-                && Objects.equals(table[index].key, key)) {
+        if (checkKey(table[index], key)) {
             rsl = table[index].value;
         }
         return rsl;
@@ -70,8 +74,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     public boolean remove(K key) {
         boolean rsl = false;
         int index = indexByKey(key);
-        if (table[index] != null && Objects.hashCode(table[index].key) == Objects.hashCode(key)
-                && Objects.equals(table[index].key, key)) {
+        if (checkKey(table[index], key)) {
             table[index] = null;
             modCount++;
             rsl = true;
