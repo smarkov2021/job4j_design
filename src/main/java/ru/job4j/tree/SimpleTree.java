@@ -36,8 +36,8 @@ public class SimpleTree<E> implements Tree<E> {
         data.offer(this.root);
         while (!data.isEmpty() && rsl.isEmpty()) {
             rsl = data.stream().filter(condition).findFirst();
-                Node<E> el = data.poll();
-                data.addAll(el.children);
+            Node<E> el = data.poll();
+            data.addAll(el.children);
         }
         return rsl;
     }
