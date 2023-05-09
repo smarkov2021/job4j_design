@@ -11,25 +11,18 @@ public class Analize {
         int added = 0;
         int changed = 0;
         int deleted = 0;
-        Set<User> copyOfPrevious = new HashSet<User>(previous);
-        Set<User> copyOfCurrent = new HashSet<User>(current);
-        Set<User> united = new HashSet<User>(current);
-        Set<User> cross = new HashSet<User>(current);
-        united.addAll(copyOfPrevious);
-        cross.retainAll(copyOfPrevious);
-        Set<Integer> arrayInt = new HashSet<Integer>();
-        for (User user : united) {
-            if (!arrayInt.contains(user.getId())) {
-                arrayInt.add(user.getId());
-            } else {
+        Map<Integer, String> mapOfElem = new HashMap<>();
+        for (User user : previous) {
+            mapOfElem.put(user.getId(), user.getName());
+        }
+        for (User user : current) {
+            if (mapOfElem.containsKey(user.getId()) && !mapOfElem.get(user.getId()).equals(user.getName())) {
                 changed++;
             }
+            mapOfElem.put(user.getId(), user.getName());
         }
-        copyOfPrevious.removeAll(cross);
-        copyOfCurrent.removeAll(cross);
-        deleted = copyOfPrevious.size() - changed;
-        added = copyOfCurrent.size() - changed;
-
+        added = mapOfElem.size() - previous.size();
+        deleted = mapOfElem.size() - current.size();
         return new Info(added, changed, deleted);
     }
 }
