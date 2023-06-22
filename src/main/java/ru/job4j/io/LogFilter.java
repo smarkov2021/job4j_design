@@ -1,7 +1,6 @@
 package ru.job4j.io;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import java.io.*;
 import java.util.List;
 
 public class LogFilter {
@@ -9,15 +8,28 @@ public class LogFilter {
         List<String> rsl = null;
         try (BufferedReader in = new BufferedReader(new FileReader(file))) {
             rsl = in.lines().filter(obj -> obj.contains(" 404 ")).toList();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return rsl;
     }
 
+    public static void save(List<String> log, String file) {
+        try (PrintWriter out = new PrintWriter(
+                new BufferedOutputStream(
+                        new FileOutputStream(file)
+                ))) {
+            for (String obj : log) {
+            out.println(obj);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public static void main(String[] args) {
         LogFilter logFilter = new LogFilter();
         List<String> log = logFilter.filter("data/log.txt");
         log.stream().forEach(System.out::println);
+        save(log, "data/404.txt");
     }
 }
