@@ -19,7 +19,7 @@ public class LogFilter {
                 new BufferedOutputStream(
                         new FileOutputStream(file)
                 ))) {
-            log.forEach(obj -> out.println(obj));
+            log.forEach(out :: println);
         } catch (IOException e) {
             e.printStackTrace();
         }
