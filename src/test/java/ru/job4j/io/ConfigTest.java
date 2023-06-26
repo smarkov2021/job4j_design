@@ -26,15 +26,22 @@ class ConfigTest {
 
     @Test
     void whenFileContainsEmptyLines() {
-        String path = "./data/pair_with_comment.properties";
+        String path = "./data/file_with_empty_lines.properties";
         Config config = new Config(path);
         config.load();
-        assertThat(config.value("name")).isNull();
+        assertThat(config.value("name")).isEqualTo("Petr Arsentev");
     }
 
     @Test
     void whenFileContainsEmptyKey() {
         String path = "./data/file_with_empty_key.properties";
+        Config config = new Config(path);
+        assertThatThrownBy(() -> config.load()).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void whenFileContainsEmptyValue() {
+        String path = "./data/file_with_empty_value.properties";
         Config config = new Config(path);
         assertThatThrownBy(() -> config.load()).isInstanceOf(IllegalArgumentException.class);
     }
