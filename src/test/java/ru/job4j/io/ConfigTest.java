@@ -1,10 +1,10 @@
 package ru.job4j.io;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ConfigTest {
 
@@ -40,9 +40,11 @@ class ConfigTest {
     }
 
     @Test
-    void whenFileContainsEmptyValue() {
-        String path = "./data/file_with_empty_value.properties";
+    void whenFileContainsOnlyComment() {
+        String path = "./data/comment.properties";
         Config config = new Config(path);
-        assertThatThrownBy(() -> config.load()).isInstanceOf(IllegalArgumentException.class);
+        //assertThatThrownBy(() -> config.load()).isInstanceOf(IllegalArgumentException.class);
+        Assertions.assertThatCode(() -> config.load()).doesNotThrowAnyException();
+
     }
 }
