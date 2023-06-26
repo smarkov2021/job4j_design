@@ -43,7 +43,6 @@ class ConfigTest {
     void whenFileContainsOnlyComment() {
         String path = "./data/comment.properties";
         Config config = new Config(path);
-        //assertThatThrownBy(() -> config.load()).isInstanceOf(IllegalArgumentException.class);
         Assertions.assertThatCode(() -> config.load()).doesNotThrowAnyException();
 
     }
