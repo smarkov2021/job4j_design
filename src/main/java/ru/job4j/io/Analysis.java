@@ -9,10 +9,14 @@ public class Analysis {
         List<String> interval = new ArrayList<>();
         try (BufferedReader read = new BufferedReader(new FileReader(source))) {
             read.lines().forEach(obj -> {
-                        if ((obj.contains("400") || obj.contains("500")) && (interval.size() % 2 == 0)) {
-                            interval.add(obj.substring(4) + ";");
-                        } else if ((obj.contains("200") || obj.contains("300")) && (interval.size() % 2 == 1)) {
-                            interval.add(obj.substring(4) + ";" + '\n');
+                        if ((obj.contains("400") || obj.contains("500")) && (interval.size() % 5 == 0)) {
+                            interval.add(obj.substring(4));
+                            interval.add(";");
+                        } else if ((obj.contains("200") || obj.contains("300")) && (interval.size() % 5 == 2)) {
+                            interval.add(obj.substring(4));
+                            interval.add(";");
+                            interval.add("\n");
+
                         }
                     }
             );
