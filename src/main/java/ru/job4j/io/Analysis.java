@@ -5,33 +5,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Analysis {
-    public void unavailable(String source, String target) {
-        List<String> interval = new ArrayList<>();
-        try (BufferedReader read = new BufferedReader(new FileReader(source))) {
-            read.lines().forEach(obj -> {
-                        if ((obj.contains("400") || obj.contains("500")) && (interval.size() % 5 == 0)) {
-                            interval.add(obj.substring(4));
-                            interval.add(";");
-                        } else if ((obj.contains("200") || obj.contains("300")) && (interval.size() % 5 == 2)) {
-                            interval.add(obj.substring(4));
-                            interval.add(";");
-                            interval.add("\n");
+ public void unavailable(String source, String target) {
+     try (PrintWriter out = new PrintWriter(
+             new BufferedOutputStream(
+                     new FileOutputStream(target)
+             ))) {
+         boolean isActive = true;
+         try (BufferedReader read = new BufferedReader(new FileReader(source))) {
+             for (String elem:read.lines().toList()) {
+                 if ((elem.contains("400") || elem.contains("500")) && (isActive)) {
+                     out.print(elem.substring(4));
+                     out.print(";");
+                     isActive = false;
+                 } else if ((elem.contains("200") || elem.contains("300")) && (!isActive)) {
+                     out.print(elem.substring(4));
+                     out.print(";");
+                     out.print(System.lineSeparator());
+                     isActive = true;
+                 }
+             }
+         }     catch (IOException e) {
+         e.printStackTrace();
+     }
+     } catch (IOException e) {
+         e.printStackTrace();
+     }
+ }
 
-                        }
-                    }
-            );
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try (PrintWriter out = new PrintWriter(
-                new BufferedOutputStream(
-                        new FileOutputStream(target)
-                ))) {
-                interval.forEach(out::print);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     public static void main(String[] args) {
         Analysis analysis = new Analysis();
         analysis.unavailable("data/server.log", "data/target.csv");
