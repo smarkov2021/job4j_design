@@ -6,27 +6,18 @@ import java.util.List;
 
 public class Analysis {
  public void unavailable(String source, String target) {
-     try (PrintWriter out = new PrintWriter(
-             new BufferedOutputStream(
-                     new FileOutputStream(target)
-             ))) {
+     try (PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(target)));
+          BufferedReader read = new BufferedReader(new FileReader(source))) {
          boolean isActive = true;
-         try (BufferedReader read = new BufferedReader(new FileReader(source))) {
-             for (String elem:read.lines().toList()) {
-                 if ((elem.contains("400") || elem.contains("500")) && (isActive)) {
-                     out.print(elem.substring(4));
-                     out.print(";");
-                     isActive = false;
-                 } else if ((elem.contains("200") || elem.contains("300")) && (!isActive)) {
-                     out.print(elem.substring(4));
-                     out.print(";");
-                     out.print(System.lineSeparator());
-                     isActive = true;
-                 }
-             }
-         }     catch (IOException e) {
-         e.printStackTrace();
-     }
+        while (read.ready()) {
+            String elem = read.readLine();
+            if ((elem.contains("400") || elem.contains("500")) == (isActive)) {
+                out.append(elem.substring(4))
+                        .append(";")
+                        .append(isActive ? "" : System.lineSeparator());
+                isActive = !isActive;
+            }
+        }
      } catch (IOException e) {
          e.printStackTrace();
      }
