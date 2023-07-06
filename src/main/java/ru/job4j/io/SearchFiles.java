@@ -14,8 +14,8 @@ import java.util.stream.Stream;
 import static java.nio.file.FileVisitResult.CONTINUE;
 
 public class SearchFiles  implements FileVisitor<Path> {
-    List<Path> path = new ArrayList<>();
-    Predicate<Path> condition;
+    private List<Path> path = new ArrayList<>();
+    private Predicate<Path> condition;
     public SearchFiles(Predicate<Path> condition) {
         this.condition = condition;
     }
@@ -27,7 +27,9 @@ public class SearchFiles  implements FileVisitor<Path> {
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-        path.add(file);
+        if (condition.test(file)) {
+            path.add(file);
+        }
         return CONTINUE;
     }
 
@@ -42,6 +44,6 @@ public class SearchFiles  implements FileVisitor<Path> {
     }
 
     public List<Path> getPaths() {
-        return path.stream().filter(condition).toList();
+        return path;
     }
 }
