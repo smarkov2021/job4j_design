@@ -17,6 +17,11 @@ public class FileProperty {
         return size;
     }
 
+    @Override
+    public String toString() {
+        return name + " " + size;
+    }
+
     public void setSize(long size) {
         this.size = size;
     }
