@@ -19,7 +19,9 @@ public class FileProperty {
 
     @Override
     public String toString() {
-        return name + " " + size;
+        StringBuffer sb = new StringBuffer();
+        sb.append(name).append(" ").append(size);
+        return sb.toString();
     }
 
     public void setSize(long size) {
