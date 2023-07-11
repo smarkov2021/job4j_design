@@ -16,7 +16,7 @@ public class Search {
     }
 
     public static void validate(String[] args) {
-        if (args.length < 2) {
+        if (args.length != 2) {
             throw new IllegalArgumentException("Root folder is null. Usage  ROOT_FOLDER.");
         }
         File file =  new File(args[0]);
@@ -26,16 +26,11 @@ public class Search {
         if (!file.isDirectory()) {
             throw new IllegalArgumentException(String.format("Not directory %s", file.getAbsoluteFile()));
         }
-        char[] check = args[1].toCharArray();
-        if (check[0] == 1) {
-            throw new IllegalArgumentException(String.format("It's Not extension"));
+        if (!args[1].startsWith(".") || args[1].length() < 2) {
+            throw new IllegalArgumentException("It's Not extension");
         }
-        for (int i = 1; i < check.length; i++) {
-            if (!Character.isLetter(check[i])) {
-                    throw new IllegalArgumentException(String.format("It's Not extension"));
-                }
-            }
-        }
+    }
+
 
     public static void main(String[] args) throws IOException {
         validate(args);
