@@ -17,6 +17,11 @@ public class Zip {
         if (args.length != 3) {
             throw new IllegalArgumentException("Error: There is not all parameters");
         }
+        if (!args[1].substring(args[0].indexOf("=") + 1).startsWith(".")
+                || args[1].substring(args[0].indexOf("=") + 1).length() < 2) {
+            throw new IllegalArgumentException(String
+                    .format("'%s' - it's not extension", args[1].substring(args[0].indexOf("=") + 1)));
+        }
         if (!args[2].endsWith(".zip")) {
             throw new IllegalArgumentException("Error: There is incorrect extension");
         }
