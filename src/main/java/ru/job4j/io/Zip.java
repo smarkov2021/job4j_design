@@ -10,13 +10,14 @@ import java.util.zip.ZipOutputStream;
 
 public class Zip {
     private static void validate(String[] args) {
+        if (args.length != 3) {
+            throw new IllegalArgumentException("Error: There is not all parameters");
+        }
         File file = new File(args[0].substring(args[0].indexOf("=") + 1));
         if (!file.isDirectory()) {
             throw new IllegalArgumentException(String.format("Not directory %s", file.getAbsoluteFile()));
         }
-        if (args.length != 3) {
-            throw new IllegalArgumentException("Error: There is not all parameters");
-        }
+
         if (!args[1].substring(args[0].indexOf("=") + 1).startsWith(".")
                 || args[1].substring(args[0].indexOf("=") + 1).length() < 2) {
             throw new IllegalArgumentException(String
