@@ -29,19 +29,19 @@ public class ConsoleChat {
         do {
             ask = in.nextLine();
             log.add(ask);
-            if (ask.equals(STOP))  {
+            if (STOP.equals(ask))  {
                 isStop = true;
-            } else if (ask.equals(CONTINUE) && isStop) {
+            } else if (CONTINUE.equals(ask) && isStop) {
                 String answer = answers.get(rand.nextInt(answers.size()));
                 log.add(answer);
                 System.out.println(answer);
                 isStop = false;
-            } else if (!isStop && !ask.equals(OUT)) {
+            } else if (!isStop && !OUT.equals(ask)) {
                 String answer = answers.get(rand.nextInt(answers.size()));
                 log.add(answer);
                 System.out.println(answer);
             }
-        } while (!ask.equals(OUT));
+        } while (!OUT.equals(ask));
         saveLog(log);
     }
 
