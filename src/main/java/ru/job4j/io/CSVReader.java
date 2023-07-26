@@ -52,7 +52,7 @@ public class CSVReader {
                 }
                 rsl.add(String.valueOf(res));
             }
-            if (argsName.get("out").equals("stdout")) {
+            if ("stdout".equals(argsName.get("out"))) {
                 for (String elm : rsl) {
                     System.out.println(elm);
                 }
