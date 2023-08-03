@@ -1,0 +1,10 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<drink isAlcohol="false" volume="500" name="Tea With Ice">
+    <tea name="Lipton" type="Black"/>
+    <compositions>
+        <composition>Water</composition>
+        <composition>Tea</composition>
+        <composition>Sugar</composition>
+        <composition>Ice</composition>
+    </compositions>
+</drink>
