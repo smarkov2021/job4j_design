@@ -17,6 +17,26 @@ public class Flat {
         this.agency = agency;
     }
 
+    public boolean isForLongRent() {
+        return forLongRent;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public String[] getItems() {
+        return items;
+    }
+
+    public Agency getAgency() {
+        return agency;
+    }
+
+    public int getCost() {
+        return cost;
+    }
+
     @Override
     public String toString() {
         return "Flat{" + "forLongRent=" + forLongRent
