@@ -3,7 +3,8 @@ create or replace function add_taxes()
 $$
     BEGIN
         update products
-        set price = price + price * 0.2;
+        set price = price + price * 0.2
+		where id = (select id from inserted);
         return new;
     END;
 $$
@@ -14,6 +15,8 @@ create trigger taxes_trigger
     referencing new table as inserted
     for each statement
     execute procedure add_taxes();
+
+
 
 
 
