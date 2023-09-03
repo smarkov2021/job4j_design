@@ -42,3 +42,4 @@ MOVE BACKWARD 2
 FROM cursor_products;
 FETCH FROM cursor_products;
 CLOSE cursor_products;
+COMMIT;
