@@ -39,9 +39,9 @@ public class TableEditor implements AutoCloseable {
         this.executeStatement(sql);
     }
     public void dropTable(String tableName) throws SQLException {
-            String sql = String.format(
-                    "DROP TABLE  %s;", tableName);
-            this.executeStatement(sql);
+        String sql = String.format(
+                "DROP TABLE  %s;", tableName);
+        this.executeStatement(sql);
     }
 
     public void addColumn(String tableName, String columnName, String type)  throws SQLException {
